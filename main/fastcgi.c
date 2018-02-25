@@ -1407,9 +1407,9 @@ int fcgi_accept_request(fcgi_request *req)
 
 					req->hook.on_accept();
 
-					FCGI_LOCK(req->listen_socket);
-					req->fd = accept(listen_socket, (struct sockaddr *)&sa, &len);
-					FCGI_UNLOCK(req->listen_socket);
+					FCGI_LOCK(req->listen_socket);//tomjrwu:?
+					req->fd = accept(listen_socket, (struct sockaddr *)&sa, &len);//tomjrwu:等待处理新的请求,在新的请求到来之前会一直阻塞在这里
+					FCGI_UNLOCK(req->listen_socket);//tomjrwu:?
 
 					client_sa = sa;
 					if (req->fd >= 0 && !fcgi_is_allowed()) {
