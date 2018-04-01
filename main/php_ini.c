@@ -411,6 +411,10 @@ static void php_load_zend_extension_cb(void *arg)
 }
 /* }}} */
 
+/* tomjrwu: 
+ this will read in php.ini, set up the configuration parameters,
+ load zend extensions and register php function extensions
+ to be loaded later */
 /* {{{ php_init_config
  */
 int php_init_config(void)

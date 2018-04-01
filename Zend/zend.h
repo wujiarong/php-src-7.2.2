@@ -176,6 +176,9 @@ struct _zend_class_entry {
 	} info;
 };
 
+/*
+ *  tomjrwu:zend功能函数集
+ */
 typedef struct _zend_utility_functions {
 	void (*error_function)(int type, const char *error_filename, const uint32_t error_lineno, const char *format, va_list args) ZEND_ATTRIBUTE_PTR_FORMAT(printf, 4, 0);
 	size_t (*printf_function)(const char *format, ...) ZEND_ATTRIBUTE_PTR_FORMAT(printf, 1, 2);

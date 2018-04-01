@@ -2078,6 +2078,9 @@ void dummy_invalid_parameter_handler(
 }
 #endif
 
+/*
+ *  tomjrwu:php模块启动函数
+ */
 /* {{{ php_module_startup
  */
 int php_module_startup(sapi_module_struct *sf, zend_module_entry *additional_modules, uint32_t num_additional_modules)

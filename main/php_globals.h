@@ -53,6 +53,9 @@ typedef struct _arg_separators {
 	char *input;
 } arg_separators;
 
+/**
+ *  tomjrwu:php核心全局变量
+ */
 struct _php_core_globals {
 	zend_bool implicit_flush;
 

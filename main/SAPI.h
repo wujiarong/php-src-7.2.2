@@ -115,7 +115,9 @@ typedef struct {
 	int proto_num;
 } sapi_request_info;
 
-
+/*
+ * tomjrwu
+ */
 typedef struct _sapi_globals_struct {
 	void *server_context;
 	sapi_request_info request_info;
@@ -215,55 +217,58 @@ SAPI_API double sapi_get_request_time(void);
 SAPI_API void sapi_terminate_process(void);
 END_EXTERN_C()
 
+/**
+ * tomjrwu:重要结构体
+ */
 struct _sapi_module_struct {
-	char *name;
-	char *pretty_name;
+	char *name;//应用层名称,如"fpm-fcgi"
+	char *pretty_name;//应用层更易读的名称,"FPM/FastCGI"
 
-	int (*startup)(struct _sapi_module_struct *sapi_module);
-	int (*shutdown)(struct _sapi_module_struct *sapi_module);
+	int (*startup)(struct _sapi_module_struct *sapi_module);//当一个应用要调用php的时候,这个模块启动的时候会调用的函数
+	int (*shutdown)(struct _sapi_module_struct *sapi_module);//当一个应用要调用php的时候,这个模块结束的时候会调用的函数
 
-	int (*activate)(void);
-	int (*deactivate)(void);
+	int (*activate)(void);//在处理每个request的时候,激活需要调用的函数
+	int (*deactivate)(void);//在处理完每个request的时候,收尾时候要调用的函数
 
-	size_t (*ub_write)(const char *str, size_t str_length);
-	void (*flush)(void *server_context);
-	zend_stat_t *(*get_stat)(void);
-	char *(*getenv)(char *name, size_t name_len);
+	size_t (*ub_write)(const char *str, size_t str_length);//这个函数告诉php如何输出数据
+	void (*flush)(void *server_context);//提供给php的刷新缓存的方法
+	zend_stat_t *(*get_stat)(void);//用来判断要执行文件的权限,来判断是否有执行权限
+	char *(*getenv)(char *name, size_t name_len);//获取环境变量的方法
 
-	void (*sapi_error)(int type, const char *error_msg, ...) ZEND_ATTRIBUTE_FORMAT(printf, 2, 3);
+	void (*sapi_error)(int type, const char *error_msg, ...) ZEND_ATTRIBUTE_FORMAT(printf, 2, 3);//错误处理方法
 
-	int (*header_handler)(sapi_header_struct *sapi_header, sapi_header_op_enum op, sapi_headers_struct *sapi_headers);
-	int (*send_headers)(sapi_headers_struct *sapi_headers);
-	void (*send_header)(sapi_header_struct *sapi_header, void *server_context);
+	int (*header_handler)(sapi_header_struct *sapi_header, sapi_header_op_enum op, sapi_headers_struct *sapi_headers);//这个函数会在调用header()的时候被调用
+	int (*send_headers)(sapi_headers_struct *sapi_headers);//发送所有的header
+	void (*send_header)(sapi_header_struct *sapi_header, void *server_context);//单独发送某一个header
 
-	size_t (*read_post)(char *buffer, size_t count_bytes);
-	char *(*read_cookies)(void);
+	size_t (*read_post)(char *buffer, size_t count_bytes);//读取HTTP POST中的数据
+	char *(*read_cookies)(void);//读取cookie中的数据
 
-	void (*register_server_variables)(zval *track_vars_array);
-	void (*log_message)(char *message, int syslog_type_int);
-	double (*get_request_time)(void);
-	void (*terminate_process)(void);
+	void (*register_server_variables)(zval *track_vars_array);//注册变量（$_SERVER相关)
+	void (*log_message)(char *message, int syslog_type_int);//日志
+	double (*get_request_time)(void);//获取请求时间
+	void (*terminate_process)(void);//终止进程
 
-	char *php_ini_path_override;
+	char *php_ini_path_override;//设置php.ini地址
 
-	void (*default_post_reader)(void);
-	void (*treat_data)(int arg, char *str, zval *destArray);
+	void (*default_post_reader)(void);//解析post数据
+	void (*treat_data)(int arg, char *str, zval *destArray);//对数据进行处理,比如进行安全过滤等,default_post_reader/tread_data/input_filter是三个能对输入进行过滤和处理的函数
 	char *executable_location;
 
-	int php_ini_ignore;
+	int php_ini_ignore;//是否不使用任何ini配置文件
 	int php_ini_ignore_cwd; /* don't look for php.ini in the current directory */
 
-	int (*get_fd)(int *fd);
+	int (*get_fd)(int *fd);//获取执行文件的fd
 
-	int (*force_http_10)(void);
+	int (*force_http_10)(void);// 强制使用http1.0
 
-	int (*get_target_uid)(uid_t *);
-	int (*get_target_gid)(gid_t *);
+	int (*get_target_uid)(uid_t *);// 获取执行程序的uid
+	int (*get_target_gid)(gid_t *);// 获取执行程序的gid
 
-	unsigned int (*input_filter)(int arg, char *var, char **val, size_t val_len, size_t *new_val_len);
+	unsigned int (*input_filter)(int arg, char *var, char **val, size_t val_len, size_t *new_val_len);// 对输入进行过滤。比如将输入参数填充到自动全局变量$_GET, $_POST, $_COOKIE中
 
-	void (*ini_defaults)(HashTable *configuration_hash);
-	int phpinfo_as_text;
+	void (*ini_defaults)(HashTable *configuration_hash);//默认的ini配置
+	int phpinfo_as_text; //是否打印phpinfo信息
 
 	char *ini_entries;
 	const zend_function_entry *additional_functions;
