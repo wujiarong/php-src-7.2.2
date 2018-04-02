@@ -66,7 +66,9 @@ END_EXTERN_C()
 typedef struct _zend_vm_stack *zend_vm_stack;
 typedef struct _zend_ini_entry zend_ini_entry;
 
-
+/**
+ * tomjrwu: zend编译器全局变量
+ */
 struct _zend_compiler_globals {
 	zend_stack loop_var_stack;
 
@@ -95,7 +97,7 @@ struct _zend_compiler_globals {
 
 	zend_llist open_files;
 
-	struct _zend_ini_parser_param *ini_parser_param;
+	struct _zend_ini_parser_param *ini_parser_param;//tomjrwu: ini
 
 	uint32_t start_lineno;
 	zend_bool increment_lineno;
