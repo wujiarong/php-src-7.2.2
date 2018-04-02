@@ -134,6 +134,9 @@ static int is_impersonate = 0;
 
 #include "fastcgi.h"
 
+/**
+ * tomjrwu: fastcgi头
+ */
 typedef struct _fcgi_header {
 	unsigned char version;
 	unsigned char type;
@@ -209,6 +212,9 @@ struct _fcgi_req_hook {
 	void(*on_close)();
 };
 
+/**
+ * tomjrwu: fastcgi请求结构体
+ */
 struct _fcgi_request {
 	int            listen_socket;
 	int            tcp;
@@ -239,6 +245,9 @@ struct _fcgi_request {
 static fcgi_logger fcgi_log;
 #endif
 
+/**
+ * tomjrwu: 通用地址结构
+ */
 typedef union _sa_t {
 	struct sockaddr     sa;
 	struct sockaddr_un  sa_unix;
