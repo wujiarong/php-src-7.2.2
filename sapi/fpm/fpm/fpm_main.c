@@ -1598,6 +1598,7 @@ int main(int argc, char *argv[])
 
 #ifdef HAVE_SIGNAL_H
 #if defined(SIGPIPE) && defined(SIG_IGN)
+	//如果在写到管道时读进程已终止,则产生此信号。当类型为SOCK_STREAM的socket已不再连接时,进程写到该socket也产生此信号。收到此信号的默认动作是中止进程。--《APUE》p238
 	signal(SIGPIPE, SIG_IGN); /* ignore SIGPIPE in standalone mode so
 								that sockets created via fsockopen()
 								don't kill PHP if the remote site
@@ -1612,7 +1613,7 @@ int main(int argc, char *argv[])
 	tsrm_ls = ts_resource(0);
 #endif
 
-	zend_signal_startup();
+	zend_signal_startup();//Zend/zend_signal.c
 
 	sapi_startup(&cgi_sapi_module);
 	cgi_sapi_module.php_ini_path_override = NULL;

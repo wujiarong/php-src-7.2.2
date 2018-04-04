@@ -37,6 +37,7 @@
 #define ZEND_SIGNAL_QUEUE_SIZE 64
 #endif
 
+//tomjrwu: 信号结构体
 /* Signal structs */
 typedef struct _zend_signal_entry_t {
 	int   flags;          /* sigaction style flags */
@@ -54,6 +55,9 @@ typedef struct _zend_signal_queue_t {
 	struct _zend_signal_queue_t *next;
 } zend_signal_queue_t;
 
+/**
+ * tomjrwu: 信号全局变量
+ */
 /* Signal Globals */
 typedef struct _zend_signal_globals_t {
 	int depth;

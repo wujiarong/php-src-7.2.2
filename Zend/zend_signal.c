@@ -366,7 +366,7 @@ static void zend_signal_globals_ctor(zend_signal_globals_t *zend_signal_globals)
 {
 	size_t x;
 
-	memset(zend_signal_globals, 0, sizeof(*zend_signal_globals));
+	memset(zend_signal_globals, 0, sizeof(*zend_signal_globals));//tomjrwu: memset作用是在一段内存块中填充某个给定的值，它是对较大的结构体或数组进行清零操作的一种最快方法
 
 	for (x = 0; x < sizeof(zend_signal_globals->pstorage) / sizeof(*zend_signal_globals->pstorage); ++x) {
 		zend_signal_queue_t *queue = &zend_signal_globals->pstorage[x];
@@ -380,7 +380,7 @@ static void zend_signal_globals_ctor(zend_signal_globals_t *zend_signal_globals)
 void zend_signal_init(void) /* {{{ */
 {
 	int signo;
-	struct sigaction sa;
+	struct sigaction sa;//sigaction是一个函数,可以用来查询或设置信号处理方式
 
 	/* Save previously registered signal handlers into orig_handlers */
 	memset(&global_orig_handlers, 0, sizeof(global_orig_handlers));
@@ -405,12 +405,12 @@ void zend_signal_startup(void)
 #ifdef ZTS
 	ts_allocate_id(&zend_signal_globals_id, sizeof(zend_signal_globals_t), (ts_allocate_ctor) zend_signal_globals_ctor, NULL);
 #else
-	zend_signal_globals_ctor(&zend_signal_globals);
+	zend_signal_globals_ctor(&zend_signal_globals);//Zend/zend_signal.c  zend信号全局变量构建器
 #endif
 
 	/* Used to block signals during execution of signal handlers */
-	sigfillset(&global_sigmask);
-	sigdelset(&global_sigmask, SIGILL);
+	sigfillset(&global_sigmask);//将参数sigset_t信号集初始化,然后把所有的信号( kill -l 可查看所有信息,共62种,无32,33)加入到此信号集里
+	sigdelset(&global_sigmask, SIGILL);//从信号集里将指定信号删除
 	sigdelset(&global_sigmask, SIGABRT);
 	sigdelset(&global_sigmask, SIGFPE);
 	sigdelset(&global_sigmask, SIGKILL);
