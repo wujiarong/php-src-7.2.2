@@ -29,7 +29,7 @@ ZEND_API void zend_llist_init(zend_llist *l, size_t size, llist_dtor_func_t dtor
 	l->tail  = NULL;
 	l->count = 0;
 	l->size  = size;
-	l->dtor  = dtor;
+	l->dtor  = dtor;//tomjrwu：dtor 析构函数
 	l->persistent = persistent;
 }
 

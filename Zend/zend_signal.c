@@ -380,12 +380,12 @@ static void zend_signal_globals_ctor(zend_signal_globals_t *zend_signal_globals)
 void zend_signal_init(void) /* {{{ */
 {
 	int signo;
-	struct sigaction sa;//sigaction是一个函数,可以用来查询或设置信号处理方式
+	struct sigaction sa;
 
 	/* Save previously registered signal handlers into orig_handlers */
 	memset(&global_orig_handlers, 0, sizeof(global_orig_handlers));
 	for (signo = 1; signo < NSIG; ++signo) {
-		if (sigaction(signo, NULL, &sa) == 0) {
+		if (sigaction(signo, NULL, &sa) == 0) {//sigaction是一个函数,可以用来查询或设置信号处理方式
 			global_orig_handlers[signo-1].flags = sa.sa_flags;
 			if (sa.sa_flags & SA_SIGINFO) {
 				global_orig_handlers[signo-1].handler = (void *) sa.sa_sigaction;

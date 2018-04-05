@@ -499,7 +499,7 @@ int fcgi_init(void)
 		sa_t sa;
 		socklen_t len = sizeof(sa);
 #endif
-		zend_hash_init(&fcgi_mgmt_vars, 8, NULL, fcgi_free_mgmt_var_cb, 1);
+		zend_hash_init(&fcgi_mgmt_vars, 8, NULL, fcgi_free_mgmt_var_cb, 1);//初始化变量fcgi_mgmt_vars
 		fcgi_set_mgmt_var("FCGI_MPXS_CONNS", sizeof("FCGI_MPXS_CONNS")-1, "0", sizeof("0")-1);
 
 		is_initialized = 1;
@@ -546,7 +546,7 @@ int fcgi_init(void)
 		}
 #else
 		errno = 0;
-		if (getpeername(0, (struct sockaddr *)&sa, &len) != 0 && errno == ENOTCONN) {
+		if (getpeername(0, (struct sockaddr *)&sa, &len) != 0 && errno == ENOTCONN) {//tomjrwu: getpeeername() 获取socket的对方地址
 			fcgi_setup_signals();
 			return is_fastcgi = 1;
 		} else {

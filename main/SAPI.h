@@ -116,7 +116,7 @@ typedef struct {
 } sapi_request_info;
 
 /*
- * tomjrwu
+ * tomjrwu sapi全局变量
  */
 typedef struct _sapi_globals_struct {
 	void *server_context;
@@ -253,7 +253,7 @@ struct _sapi_module_struct {
 
 	void (*default_post_reader)(void);//解析post数据
 	void (*treat_data)(int arg, char *str, zval *destArray);//对数据进行处理,比如进行安全过滤等,default_post_reader/tread_data/input_filter是三个能对输入进行过滤和处理的函数
-	char *executable_location;
+	char *executable_location;//tomjrwu: 可执行文件的路径 如：/data/home/tomjrwu/php-src/php-7.2.2-debug/sbin/php-fpm
 
 	int php_ini_ignore;//是否不使用任何ini配置文件
 	int php_ini_ignore_cwd; /* don't look for php.ini in the current directory */

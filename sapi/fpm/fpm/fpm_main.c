@@ -137,8 +137,8 @@ static void fastcgi_ini_parser(zval *arg1, zval *arg2, zval *arg3, int callback_
 #define PHP_MODE_LINT		4
 #define PHP_MODE_STRIP		5
 
-static char *php_optarg = NULL;
-static int php_optind = 1;
+static char *php_optarg = NULL;//tomjrwu: 用于处理命令行输入参数的临时变量,保存参数值
+static int php_optind = 1;//tomjrwu: 用于处理命令行输入参数的临时变量,保存索引
 static zend_module_entry cgi_module_entry;
 
 static const opt_struct OPTIONS[] = {
@@ -743,7 +743,7 @@ static void php_cgi_ini_activate_user_config(char *path, int path_len, const cha
 
 static int sapi_cgi_activate(void) /* {{{ */
 {
-	fcgi_request *request = (fcgi_request*) SG(server_context);
+	fcgi_request *request = (fcgi_request*) SG(server_context);//tomjrwu: server_context为void *类型的指针,这里强制转化为fcgi_request*类型的指针
 	char *path, *doc_root, *server_name;
 	uint32_t path_len, doc_root_len, server_name_len;
 
@@ -1587,13 +1587,13 @@ int main(int argc, char *argv[])
 	int requests = 0;
 	int fcgi_fd = 0;
 	fcgi_request *request;
-	char *fpm_config = NULL;
+	char *fpm_config = NULL;//tomjrwu：fpm配置路径 (-y xxx/fpm.conf)
 	char *fpm_prefix = NULL;
 	char *fpm_pid = NULL;
 	int test_conf = 0;
 	int force_daemon = -1;
 	int force_stderr = 0;
-	int php_information = 0;
+	int php_information = 0;//tomjrwu: php -i
 	int php_allow_to_run_as_root = 0;
 
 #ifdef HAVE_SIGNAL_H
@@ -1638,7 +1638,7 @@ int main(int argc, char *argv[])
 				if (cgi_sapi_module.php_ini_path_override) {
 					free(cgi_sapi_module.php_ini_path_override);
 				}
-				cgi_sapi_module.php_ini_path_override = strdup(php_optarg);
+				cgi_sapi_module.php_ini_path_override = strdup(php_optarg);//tomjrwu: strdup()拷贝字符串
 				break;
 
 			case 'n':
