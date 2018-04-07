@@ -18,6 +18,9 @@ enum fpm_address_domain {
 	FPM_AF_INET = 2
 };
 
+/**
+ *  tomjrwu: fpm worker进程池
+ */
 struct fpm_worker_pool_s {
 	struct fpm_worker_pool_s *next;
 	struct fpm_worker_pool_config_s *config;

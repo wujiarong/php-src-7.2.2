@@ -78,6 +78,7 @@ struct _gc_additional_bufer {
 	gc_root_buffer        buf[GC_NUM_ADDITIONAL_ENTRIES];
 };
 
+//tomjrwu: zend gc全局变量
 typedef struct _zend_gc_globals {
 	zend_bool         gc_enabled;
 	zend_bool         gc_active;

@@ -491,6 +491,9 @@ int fpm_unix_init_main() /* {{{ */
 			return -1;
 		}
 
+        /**
+         *  tomjrwu: 首次执行fork出master进程
+         */
 		/* then fork */
 		pid_t pid = fork();
 		switch (pid) {

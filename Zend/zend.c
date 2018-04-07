@@ -704,6 +704,9 @@ static zend_bool php_auto_globals_create_globals(zend_string *name) /* {{{ */
 }
 /* }}} */
 
+/**
+ *  tomjrwu: 启动zend引擎
+ */
 int zend_startup(zend_utility_functions *utility_functions, char **extensions) /* {{{ */
 {
 #ifdef ZTS

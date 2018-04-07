@@ -131,7 +131,7 @@ struct _zend_compiler_globals {
 #endif
 };
 
-
+//tomjrwu: zend 执行器全局变量
 struct _zend_executor_globals {
 	zval uninitialized_zval;
 	zval error_zval;

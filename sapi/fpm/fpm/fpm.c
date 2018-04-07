@@ -88,6 +88,9 @@ int fpm_init(int argc, char **argv, char *config, char *prefix, char *pid, int t
 }
 /* }}} */
 
+/**
+ *  tomjrwu：master进程进入事件循环,work进程返回监听的 socket
+ */
 /*	children: return listening socket
 	parent: never return */
 int fpm_run(int *max_requests) /* {{{ */

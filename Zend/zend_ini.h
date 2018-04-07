@@ -44,6 +44,9 @@ typedef struct _zend_ini_entry_def {
 	uint32_t value_length;
 } zend_ini_entry_def;
 
+/**
+ * tomjrwu: ini 配置项
+ */
 struct _zend_ini_entry {
 	zend_string *name;
 	ZEND_INI_MH((*on_modify));

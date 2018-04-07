@@ -39,6 +39,9 @@
 int fpm_run(int *max_requests);
 int fpm_init(int argc, char **argv, char *config, char *prefix, char *pid, int test_conf, int run_as_root, int force_daemon, int force_stderr);
 
+/**
+ * tomjrwu: fpm全局变量
+ */
 struct fpm_globals_s {
 	pid_t parent_pid;
 	int argc;

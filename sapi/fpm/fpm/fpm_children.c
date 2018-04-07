@@ -397,6 +397,9 @@ int fpm_children_make(struct fpm_worker_pool_s *wp, int in_event_loop, int nb_to
 			return 2;
 		}
 
+        /**
+         *  tomjrwu: fork work进程
+         */
 		pid = fork();
 
 		switch (pid) {
